@@ -6,6 +6,10 @@ const Container = styled.form`
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;
 
 const Card = styled.div`
@@ -14,20 +18,36 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const CardHeader = styled.div`
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const CardTitle = styled.h2`
   font-size: 1.5rem;
   color: #2d3748;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.75rem;
+  }
 `;
 
 const Label = styled.label`
@@ -36,6 +56,10 @@ const Label = styled.label`
   font-weight: 500;
   color: #4a5568;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Input = styled.input`
@@ -55,6 +79,10 @@ const Input = styled.input`
     background-color: #f7fafc;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
+  }
 `;
 
 const Select = styled.select`
@@ -73,6 +101,11 @@ const Select = styled.select`
   &:disabled {
     background-color: #f7fafc;
     cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0.4rem;
   }
 `;
 
@@ -120,6 +153,11 @@ const Button = styled.button`
     padding: 0.5rem;
     border-radius: 50%;
   `}
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+  }
 `;
 
 const TabList = styled.div`
@@ -127,6 +165,10 @@ const TabList = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Tab = styled.button`
@@ -141,6 +183,11 @@ const Tab = styled.button`
   &:hover {
     background: ${(props) => (props.active ? '#2c5282' : '#f7fafc')};
   }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
+    font-size: 0.875rem;
+  }
 `;
 
 const QuestionCard = styled(Card)`
@@ -153,6 +200,10 @@ const QuestionHeader = styled.div`
   justify-content: space-between;
   align-items: start;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const SwitchContainer = styled.div`
@@ -160,6 +211,10 @@ const SwitchContainer = styled.div`
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const Switch = styled.input.attrs({ type: 'checkbox' })`
@@ -201,6 +256,11 @@ const Switch = styled.input.attrs({ type: 'checkbox' })`
 const InputGroup = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 `;
 
 const Alert = styled.div`
@@ -213,13 +273,24 @@ const Alert = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.8rem;
+  }
 `;
 
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 `;
+
 
 const QUESTION_TYPES = {
   TEXT: 'text',

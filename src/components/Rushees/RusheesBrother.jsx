@@ -534,37 +534,6 @@ const DisplayRushees = () => {
             ))}
           </Select>
         </FilterSection>
-        <TagsContainer>
-          <div style={{ marginBottom: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <Label>Manage Tags</Label>
-            <AddTagInput
-              type="text"
-              value={newTag}
-              onChange={(e) => setNewTag(e.target.value)}
-              placeholder="Add a new tag"
-            />
-            <Button onClick={handleAddTag}>Add Tag</Button>
-          </div>
-          <div style={{ marginBottom: "1rem", display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-            {tags.map((tag) => (
-              <Tag key={tag} onClick={() => handleRemoveTag(tag)}>
-                {tag} &times;
-              </Tag>
-            ))}
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <Label>Add a tag to filtered rushees</Label>
-            <Select value={selectedTagForBulkAdd} onChange={(e) => setSelectedTagForBulkAdd(e.target.value)}>
-              <option value="">Select a tag</option>
-              {tags.map((tag) => (
-                <option key={tag} value={tag}>
-                  {tag}
-                </option>
-              ))}
-            </Select>
-            <Button onClick={handleAddTagToFilteredRushees}>Add to Filtered Rushees</Button>
-          </div>
-        </TagsContainer>
       </FiltersContainer>
 
       <RusheeList>

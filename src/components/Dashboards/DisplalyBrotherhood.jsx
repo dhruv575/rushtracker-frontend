@@ -8,6 +8,10 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const FilterContainer = styled.div`
@@ -15,6 +19,11 @@ const FilterContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 `;
 
 const Checkbox = styled.input`
@@ -30,7 +39,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -50,17 +59,31 @@ const Name = styled.h3`
   font-size: 1.25rem;
   color: #2d3748;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+  }
 `;
 
 const Email = styled.p`
   color: #4a5568;
   margin: 0;
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 const Position = styled.p`
   color: #2b6cb0;
   font-weight: 500;
   margin: 0;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 const StatusBadge = styled.span`
@@ -69,14 +92,23 @@ const StatusBadge = styled.span`
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
-  background-color: ${props => props.active ? '#C6F6D5' : '#FED7D7'};
-  color: ${props => props.active ? '#276749' : '#9B2C2C'};
+  background-color: ${(props) => (props.active ? '#C6F6D5' : '#FED7D7')};
+  color: ${(props) => (props.active ? '#276749' : '#9B2C2C')};
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Button = styled.button`
@@ -97,6 +129,11 @@ const Button = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.8rem;
+  }
 `;
 
 const Select = styled.select`
@@ -105,24 +142,37 @@ const Select = styled.select`
   border: 1px solid #e2e8f0;
   border-radius: 4px;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.8rem;
+  }
 `;
 
 const Message = styled.div`
   padding: 1rem;
   border-radius: 4px;
   margin-bottom: 1rem;
-  ${props => props.type === 'success' 
-    ? `
+
+  ${(props) =>
+    props.type === 'success'
+      ? `
       background-color: #c6f6d5;
       color: #276749;
       border: 1px solid #9ae6b4;
-    ` 
-    : `
+    `
+      : `
       background-color: #fed7d7;
       color: #9b2c2c;
       border: 1px solid #feb2b2;
     `}
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.8rem;
+  }
 `;
+
 
 const DisplayBrotherhood = () => {
   const [brothers, setBrothers] = useState([]);

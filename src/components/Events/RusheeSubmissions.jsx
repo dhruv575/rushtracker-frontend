@@ -10,6 +10,11 @@ const PageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    border: 0.5rem solid #fff;
+    padding: 1rem;
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -18,18 +23,32 @@ const TitleContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   margin: 1rem 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 2rem;
   color: #2d3748;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Divider = styled.hr`
   margin: 0 1rem 1rem;
   border: none;
   border-top: 2px solid #e2e8f0;
+
+  @media (max-width: 768px) {
+    margin: 0 0.5rem 1rem;
+  }
 `;
 
 const TableContainer = styled.div`
@@ -38,6 +57,10 @@ const TableContainer = styled.div`
   display: table;
   width: 100%;
   border-collapse: collapse;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 const TableRow = styled.div`
@@ -48,6 +71,10 @@ const TableRow = styled.div`
 const TableHeader = styled(TableRow)`
   font-weight: bold;
   background-color: #edf2f7;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 const TableCell = styled.div`
@@ -57,6 +84,10 @@ const TableCell = styled.div`
   border: 1px solid #e2e8f0;
   white-space: pre-wrap;
   width: ${({ width }) => width || 'auto'};
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;
 
 const Button = styled.button`
@@ -71,12 +102,22 @@ const Button = styled.button`
   &:hover {
     background-color: #2c5282;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
 `;
 
 const ExportButton = styled(Button)`
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   height: fit-content;
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
 `;
 
 const Loading = styled.div`
@@ -84,6 +125,11 @@ const Loading = styled.div`
   margin-top: 2rem;
   font-size: 1.25rem;
   color: #4a5568;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 const Error = styled.div`
@@ -91,6 +137,11 @@ const Error = styled.div`
   margin-top: 2rem;
   font-size: 1.25rem;
   color: #e53e3e;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 const ModalOverlay = styled.div`
@@ -104,6 +155,10 @@ const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const ModalContent = styled.div`
@@ -114,7 +169,11 @@ const ModalContent = styled.div`
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  position: relative; /* Needed for positioning the close button */
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -131,7 +190,12 @@ const CloseButton = styled.button`
   &:hover {
     color: #c53030;
   }
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
 `;
+
 
 const RusheeSubmissions = () => {
   const { fratId, eventId } = useParams();

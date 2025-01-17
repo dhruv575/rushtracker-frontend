@@ -6,6 +6,10 @@ const FormContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Card = styled.div`
@@ -14,6 +18,10 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Title = styled.h2`
@@ -21,10 +29,19 @@ const Title = styled.h2`
   margin-bottom: 1.5rem;
   text-align: center;
   font-size: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Label = styled.label`
@@ -32,6 +49,10 @@ const Label = styled.label`
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: #4a5568;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Input = styled.input`
@@ -45,6 +66,10 @@ const Input = styled.input`
     outline: none;
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
   }
 `;
 
@@ -62,6 +87,11 @@ const TextArea = styled.textarea`
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
+    min-height: 80px;
+  }
 `;
 
 const RatingContainer = styled.div`
@@ -69,19 +99,28 @@ const RatingContainer = styled.div`
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    gap: 0.4rem;
+  }
 `;
 
 const RatingButton = styled.button`
   padding: 0.5rem 1rem;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
-  background: ${props => props.selected ? '#3182ce' : 'white'};
-  color: ${props => props.selected ? 'white' : '#2d3748'};
+  background: ${props => (props.selected ? '#3182ce' : 'white')};
+  color: ${props => (props.selected ? 'white' : '#2d3748')};
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background: ${props => props.selected ? '#2c5282' : '#f7fafc'};
+    background: ${props => (props.selected ? '#2c5282' : '#f7fafc')};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -90,6 +129,10 @@ const ChoiceContainer = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    gap: 0.4rem;
+  }
 `;
 
 const ChoiceLabel = styled.label`
@@ -103,6 +146,11 @@ const ChoiceLabel = styled.label`
 
   &:hover {
     background: #f7fafc;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -122,6 +170,11 @@ const Message = styled.div`
       color: #9b2c2c;
       border: 1px solid #feb2b2;
     `}
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const Button = styled.button`
@@ -142,7 +195,13 @@ const Button = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
 `;
+
 
 const RusheeEventForm = ({ event, fraternity, isPublic }) => {
   const [formResponses, setFormResponses] = useState({});

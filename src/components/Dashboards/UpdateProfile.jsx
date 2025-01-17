@@ -26,12 +26,21 @@ const Card = styled.div`
   padding: 2rem;
   flex: 1;
   min-width: 300px;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `;
 
 const Title = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Form = styled.form`
@@ -63,6 +72,11 @@ const Input = styled.input`
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.4rem;
+  }
 `;
 
 const Button = styled.button`
@@ -83,24 +97,36 @@ const Button = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.6rem;
+  }
 `;
 
 const Message = styled.div`
   padding: 1rem;
   border-radius: 4px;
   margin-top: 1rem;
-  ${props => props.type === 'success' 
-    ? `
+
+  ${props =>
+    props.type === 'success'
+      ? `
       background-color: #c6f6d5;
       color: #276749;
       border: 1px solid #9ae6b4;
-    ` 
-    : `
+    `
+      : `
       background-color: #fed7d7;
       color: #9b2c2c;
       border: 1px solid #feb2b2;
     `}
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
+
 
 const UpdateProfile = () => {
   const brother = getBrotherData();

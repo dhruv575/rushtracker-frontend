@@ -9,6 +9,10 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;
 
 const EventCard = styled.div`
@@ -17,6 +21,10 @@ const EventCard = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const EventHeader = styled.div`
@@ -24,22 +32,40 @@ const EventHeader = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const EventTitle = styled.h3`
   color: #2d3748;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const EventDetails = styled.div`
   color: #4a5568;
   font-size: 0.875rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 `;
 
 const Button = styled.button`
@@ -68,6 +94,11 @@ const Button = styled.button`
       background-color: #cbd5e0;
     }
   `}
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+  }
 `;
 
 const Modal = styled.div`
@@ -81,6 +112,10 @@ const Modal = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const ModalContent = styled.div`
@@ -92,6 +127,10 @@ const ModalContent = styled.div`
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -107,6 +146,10 @@ const CloseButton = styled.button`
   &:hover {
     color: #2d3748;
   }
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
 `;
 
 const Message = styled.div`
@@ -115,7 +158,13 @@ const Message = styled.div`
   color: #9b2c2c;
   border-radius: 4px;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.875rem;
+  }
 `;
+
 
 const EventList = () => {
   const [events, setEvents] = useState([]);

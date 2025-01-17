@@ -8,25 +8,45 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Header = styled.div`
   text-align: center;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Title = styled.h1`
   color: #2d3748;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Subtitle = styled.p`
   color: #4a5568;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const OnboardingPrompt = styled.div`
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const OnboardingLink = styled.a`
@@ -37,13 +57,23 @@ const OnboardingLink = styled.a`
   &:hover {
     color: #2c5282;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ErrorMessage = styled.div`
   text-align: center;
   color: #e53e3e;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
 `;
+
 
 const PublicRusheeForm = () => {
   const { fratId, eventId } = useParams();  // Updated to use IDs from URL

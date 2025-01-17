@@ -91,7 +91,8 @@ const Table = styled.table`
   border-collapse: collapse;
   margin-top: 1rem;
 
-  th, td {
+  th,
+  td {
     border: 1px solid #e2e8f0;
     padding: 0.5rem;
     text-align: left;
@@ -112,7 +113,7 @@ const Input = styled.input`
   padding: 0.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
-  
+
   &:focus {
     outline: none;
     border-color: #3182ce;

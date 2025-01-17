@@ -9,6 +9,11 @@ const PageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    border: 0.5rem solid #fff;
+    padding: 1rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -16,12 +21,20 @@ const Title = styled.h1`
   font-size: 2rem;
   text-align: center;
   color: #2d3748;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Divider = styled.hr`
   margin: 0 1rem 1rem;
   border: none;
   border-top: 2px solid #e2e8f0;
+
+  @media (max-width: 768px) {
+    margin: 0 0.5rem 1rem;
+  }
 `;
 
 const TableContainer = styled.div`
@@ -30,6 +43,10 @@ const TableContainer = styled.div`
   display: table;
   width: 100%;
   border-collapse: collapse;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 const TableRow = styled.div`
@@ -40,6 +57,10 @@ const TableRow = styled.div`
 const TableHeader = styled(TableRow)`
   font-weight: bold;
   background-color: #edf2f7;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 const TableCell = styled.div`
@@ -49,6 +70,10 @@ const TableCell = styled.div`
   border: 1px solid #e2e8f0;
   white-space: pre-wrap;
   width: ${({ width }) => width || 'auto'};
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;
 
 const Loading = styled.div`
@@ -56,6 +81,11 @@ const Loading = styled.div`
   margin-top: 2rem;
   font-size: 1.25rem;
   color: #4a5568;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 const Error = styled.div`
@@ -63,6 +93,11 @@ const Error = styled.div`
   margin-top: 2rem;
   font-size: 1.25rem;
   color: #e53e3e;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 const BrotherSubmissions = () => {

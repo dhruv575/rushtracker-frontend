@@ -10,6 +10,7 @@ const FormContainer = styled.div`
 
   @media (max-width: 768px) {
     padding: 1rem;
+    max-width: 100%;
   }
 `;
 
@@ -48,34 +49,51 @@ const Label = styled.label`
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: #4a5568;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
   margin-top: 0.25rem;
+  font-size: 1rem;
 
   &:focus {
     outline: none;
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
 `;
 
 const Select = styled.select`
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
   margin-top: 0.25rem;
   background-color: white;
+  font-size: 1rem;
 
   &:focus {
     outline: none;
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.5rem;
   }
 `;
 
@@ -89,6 +107,7 @@ const Button = styled.button`
   cursor: pointer;
   width: 100%;
   margin-top: 1rem;
+  font-size: 1rem;
 
   &:hover {
     background-color: #2c5282;
@@ -98,27 +117,44 @@ const Button = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
 `;
 
 const Message = styled.div`
   padding: 1rem;
   border-radius: 4px;
   margin-bottom: 1rem;
-  ${({ type }) => type === 'success'
-    ? `
+  font-size: 1rem;
+
+  ${({ type }) =>
+    type === 'success'
+      ? `
       background-color: #c6f6d5;
       color: #276749;
       border: 1px solid #9ae6b4;
     `
-    : `
+      : `
       background-color: #fed7d7;
       color: #9b2c2c;
       border: 1px solid #feb2b2;
     `}
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const InitialForm = styled.div`
   margin-bottom: 2rem;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const RusheeOnboardingForm = () => {

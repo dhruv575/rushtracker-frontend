@@ -22,7 +22,13 @@ const ExportButton = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.8rem;
+  }
 `;
+
 
 const BrotherExport = ({ brothers }) => {
   const [events, setEvents] = useState([]);

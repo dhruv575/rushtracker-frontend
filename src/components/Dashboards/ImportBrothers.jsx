@@ -7,6 +7,10 @@ const Container = styled.div`
   max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Card = styled.div`
@@ -15,12 +19,20 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Title = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
 `;
 
 const Instructions = styled.div`
@@ -28,10 +40,18 @@ const Instructions = styled.div`
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Step = styled.div`
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const StepNumber = styled.span`
@@ -41,12 +61,21 @@ const StepNumber = styled.span`
   border-radius: 9999px;
   margin-right: 0.5rem;
   font-size: 0.875rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
 `;
 
 const PositionList = styled.ul`
   list-style-type: disc;
   margin-left: 2rem;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    margin-left: 1rem;
+  }
 `;
 
 const Button = styled.button`
@@ -69,6 +98,11 @@ const Button = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.6rem 1.2rem;
+  }
 `;
 
 const FileInput = styled.input`
@@ -87,24 +121,37 @@ const FileLabel = styled.label`
   &:hover {
     background-color: #2d3748;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.6rem 1.2rem;
+  }
 `;
 
 const Message = styled.div`
   padding: 1rem;
   border-radius: 4px;
   margin-top: 1rem;
-  ${props => props.type === 'success' 
-    ? `
+
+  ${({ type }) =>
+    type === "success"
+      ? `
       background-color: #c6f6d5;
       color: #276749;
       border: 1px solid #9ae6b4;
-    ` 
-    : `
+    `
+      : `
       background-color: #fed7d7;
       color: #9b2c2c;
       border: 1px solid #feb2b2;
     `}
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.8rem;
+  }
 `;
+
 
 const ImportBrothers = () => {
   const [message, setMessage] = useState({ type: '', content: '' });

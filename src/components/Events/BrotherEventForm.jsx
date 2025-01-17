@@ -50,6 +50,10 @@ const Label = styled.label`
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: #4a5568;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Input = styled.input`
@@ -63,6 +67,10 @@ const Input = styled.input`
     outline: none;
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
   }
 `;
 
@@ -80,6 +88,11 @@ const TextArea = styled.textarea`
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
+    min-height: 80px;
+  }
 `;
 
 const RatingContainer = styled.div`
@@ -87,19 +100,28 @@ const RatingContainer = styled.div`
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    gap: 0.4rem;
+  }
 `;
 
 const RatingButton = styled.button`
   padding: 0.5rem 1rem;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
-  background: ${props => props.selected ? '#3182ce' : 'white'};
-  color: ${props => props.selected ? 'white' : '#2d3748'};
+  background: ${props => (props.selected ? '#3182ce' : 'white')};
+  color: ${props => (props.selected ? 'white' : '#2d3748')};
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background: ${props => props.selected ? '#2c5282' : '#f7fafc'};
+    background: ${props => (props.selected ? '#2c5282' : '#f7fafc')};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -108,6 +130,10 @@ const ChoiceContainer = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    gap: 0.4rem;
+  }
 `;
 
 const ChoiceLabel = styled.label`
@@ -124,8 +150,9 @@ const ChoiceLabel = styled.label`
     background: #f7fafc;
   }
 
-  input {
-    margin: 0;
+  @media (max-width: 768px) {
+    padding: 0.4rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -147,12 +174,21 @@ const Button = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const Error = styled.div`
   color: #e53e3e;
   margin-top: 0.5rem;
   font-size: 0.875rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Message = styled.div`
@@ -169,7 +205,13 @@ const Message = styled.div`
       background-color: white;
       color: black;
     `}
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
 `;
+
 
 const BrotherEventForm = ({ eventId }) => {
   const [event, setEvent] = useState(null);
