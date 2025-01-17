@@ -395,20 +395,6 @@ const RusheeOnboardingForm = () => {
                 <option value="4">Senior</option>
               </Select>
             </FormGroup>
-
-            <FormGroup>
-              <Label>GPA</Label>
-              <Input
-                type="number"
-                name="gpa"
-                value={formData.gpa}
-                onChange={handleInputChange}
-                step="0.01"
-                min="0"
-                max="4"
-              />
-            </FormGroup>
-
             <FormGroup>
               <Label>Resume Link</Label>
               <Input
