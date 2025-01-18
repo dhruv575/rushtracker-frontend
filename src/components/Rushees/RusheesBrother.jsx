@@ -264,29 +264,57 @@ const RusheeList = styled.div`
 `;
 
 const RusheeCard = styled.div`
-  background: white;
-  padding: 1.25rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid #eee;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
+  background: white;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
+`;
 
-  &:active {
-    transform: translateY(0);
-  }
+const ProfileImage = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+`;
 
-  @media (max-width: 768px) {
-    padding: 1rem;
-    gap: 0.5rem;
-  }
+const RusheeImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const RusheeInfo = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const RusheeName = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+`;
+
+const RusheeEmail = styled.div`
+  color: #666;
+  font-size: 14px;
+`;
+
+const RusheeStatus = styled.div`
+  color: #444;
+  font-size: 14px;
 `;
 
 const SearchRow = styled.div`
@@ -539,12 +567,28 @@ const DisplayRushees = () => {
       <RusheeList>
         {filteredRushees.map((rushee) => (
           <RusheeCard key={rushee._id} onClick={() => setSelectedRushee(rushee)}>
-            <div>
-              <strong>{rushee.name}</strong>
-            </div>
-            <div>{rushee.email}</div>
-            <div>Status: {rushee.status}</div>
-            <Button>View Details</Button>
+            <ProfileImage>
+              {rushee.picture ? (
+                <RusheeImage 
+                  src={rushee.picture} 
+                  alt={rushee.name}
+                  onError={(e) => {
+                    e.target.src = '/default.jpg';
+                  }}
+                />
+              ) : (
+                <RusheeImage 
+                  src="/default.jpg" 
+                  alt="Default profile"
+                />
+              )}
+            </ProfileImage>
+            
+            <RusheeInfo>
+              <RusheeName>{rushee.name}</RusheeName>
+              <RusheeEmail>{rushee.email}</RusheeEmail>
+              <Button>View Details</Button>
+            </RusheeInfo>
           </RusheeCard>
         ))}
       </RusheeList>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { handleImageUpload } from '../../utils/imageUpload';
 import api from '../../utils/api';
 
 const FormContainer = styled.div`
@@ -157,6 +158,76 @@ const InitialForm = styled.div`
   }
 `;
 
+const ImageUploadContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+`;
+
+const ImagePreviewContainer = styled.div`
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: ${props => props.hasImage ? 'none' : '2px dashed #ccc'};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${props => props.hasImage ? 'transparent' : '#f8f9fa'};
+  position: relative;
+`;
+
+const PreviewImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const FileInput = styled.input`
+  display: none;
+`;
+
+const UploadButton = styled.label`
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  text-align: center;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
+const UploadIcon = styled.div`
+  color: #666;
+  font-size: 40px;
+`;
+
+const LoadingSpinner = styled.div`
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
 const RusheeOnboardingForm = () => {
   const { fratId } = useParams();
   const navigate = useNavigate();
@@ -174,6 +245,7 @@ const RusheeOnboardingForm = () => {
   });
   const [message, setMessage] = useState({ type: '', content: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
     const fetchFratInfo = async () => {
@@ -295,10 +367,7 @@ const RusheeOnboardingForm = () => {
         type: 'success',
         content: 'Information updated successfully!'
       });
-      
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
+
     } catch (error) {
       setMessage({
         type: 'error',
@@ -306,6 +375,34 @@ const RusheeOnboardingForm = () => {
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      setUploadingImage(true);
+      setMessage({ type: '', content: '' });
+      const imageUrl = await handleImageUpload(file);
+      
+      setFormData(prev => ({
+        ...prev,
+        picture: imageUrl
+      }));
+      
+      setMessage({
+        type: 'success',
+        content: 'Image uploaded successfully!'
+      });
+    } catch (error) {
+      setMessage({
+        type: 'error',
+        content: error.message || 'Failed to upload image'
+      });
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -395,6 +492,45 @@ const RusheeOnboardingForm = () => {
                 <option value="4">Senior</option>
               </Select>
             </FormGroup>
+
+            <FormGroup>
+              <Label>Profile Picture</Label>
+              <ImageUploadContainer>
+                <ImagePreviewContainer hasImage={!!formData.picture}>
+                  {formData.picture ? (
+                    <PreviewImage 
+                      src={formData.picture} 
+                      alt="Profile preview" 
+                    />
+                  ) : (
+                    <UploadIcon>📸</UploadIcon>
+                  )}
+                </ImagePreviewContainer>
+                
+                <FileInput
+                  type="file"
+                  id="profile-picture"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={handleImageChange}
+                  disabled={uploadingImage}
+                />
+                
+                <UploadButton 
+                  htmlFor="profile-picture"
+                  disabled={uploadingImage}
+                >
+                  {uploadingImage ? (
+                    <LoadingSpinner />
+                  ) : formData.picture ? (
+                    'Change Photo'
+                  ) : (
+                    'Upload Photo'
+                  )}
+                </UploadButton>
+              </ImageUploadContainer>
+            </FormGroup>
+
             <FormGroup>
               <Label>Resume Link</Label>
               <Input
@@ -406,18 +542,10 @@ const RusheeOnboardingForm = () => {
               />
             </FormGroup>
 
-            <FormGroup>
-              <Label>Profile Picture Link</Label>
-              <Input
-                type="url"
-                name="picture"
-                value={formData.picture}
-                onChange={handleInputChange}
-                placeholder="https://"
-              />
-            </FormGroup>
-
-            <Button type="submit" disabled={isSubmitting}>
+            <Button 
+              type="submit" 
+              disabled={isSubmitting || uploadingImage}
+            >
               {isSubmitting ? 'Submitting...' : 'Submit'}
             </Button>
           </form>

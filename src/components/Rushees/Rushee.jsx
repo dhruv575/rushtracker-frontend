@@ -127,6 +127,31 @@ const Select = styled.select`
   border-radius: 4px;
 `;
 
+const ProfileHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+`;
+
+const ProfileImage = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+`;
+
+const RusheeImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const ProfileInfo = styled.div`
+  flex: 1;
+`;
+
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp);
   if (isNaN(date.getTime())) {
@@ -244,10 +269,29 @@ const Rushee = ({ rusheeId }) => {
 
   return (
     <Container>
-      <Header>
-        <Title>{rushee.name}</Title>
-        <Subtitle>{rushee.email}</Subtitle>
-      </Header>
+      <ProfileHeader>
+        <ProfileImage>
+          {rushee?.picture ? (
+            <RusheeImage 
+              src={rushee.picture} 
+              alt={rushee.name}
+              onError={(e) => {
+                e.target.src = '/default.jpg';
+              }}
+            />
+          ) : (
+            <RusheeImage 
+              src="/default.jpg" 
+              alt="Default profile"
+            />
+          )}
+        </ProfileImage>
+        
+        <ProfileInfo>
+          <h2>{rushee?.name}</h2>
+          <p>{rushee?.email}</p>
+        </ProfileInfo>
+      </ProfileHeader>
 
       <Section>
         <Label>Status</Label>
