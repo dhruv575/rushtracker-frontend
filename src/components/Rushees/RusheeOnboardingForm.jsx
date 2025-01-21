@@ -494,7 +494,7 @@ const RusheeOnboardingForm = () => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Profile Picture</Label>
+              <Label>Profile Picture *</Label>
               <ImageUploadContainer>
                 <ImagePreviewContainer hasImage={!!formData.picture}>
                   {formData.picture ? (
@@ -511,9 +511,9 @@ const RusheeOnboardingForm = () => {
                   type="file"
                   id="profile-picture"
                   accept="image/*"
-                  capture="environment"
                   onChange={handleImageChange}
                   disabled={uploadingImage}
+                  required
                 />
                 
                 <UploadButton 
