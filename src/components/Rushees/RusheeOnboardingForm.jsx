@@ -359,6 +359,8 @@ const RusheeOnboardingForm = () => {
           major: formData.major,
           year: formData.year,
           gpa: formData.gpa,
+          picture: formData.picture,
+          resume: formData.resume,
         };
         await api.patch(`/rushees/${rusheeId}?fraternity=${fratId}`, updateData);
       }

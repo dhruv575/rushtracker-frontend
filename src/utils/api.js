@@ -1,16 +1,35 @@
 import axios from 'axios';
+import { clearUserData } from './auth';
 
 const api = axios.create({
   baseURL: 'https://rushtracker-backend-6ca803ef895b.herokuapp.com/api'
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+// Add request interceptor to add auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
+
+// Add response interceptor to handle expired tokens
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      clearUserData();
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
 // Authentication
 export const login = async (email, password) => {

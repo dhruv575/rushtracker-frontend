@@ -12,10 +12,15 @@ export const setAuthToken = (token) => {
   };
   
   export const setBrotherData = (data) => {
-    localStorage.setItem('brother', JSON.stringify(data));
+    localStorage.setItem('brotherData', JSON.stringify(data));
   };
   
   export const getBrotherData = () => {
-    const data = localStorage.getItem('brother');
+    const data = localStorage.getItem('brotherData');
     return data ? JSON.parse(data) : null;
   };
+
+export const clearUserData = () => {
+  localStorage.removeItem('brotherData');
+  localStorage.removeItem('token');
+};
