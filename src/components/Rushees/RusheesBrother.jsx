@@ -251,6 +251,11 @@ const Button = styled.button`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
 const RusheeList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -587,7 +592,22 @@ const DisplayRushees = () => {
             <RusheeInfo>
               <RusheeName>{rushee.name}</RusheeName>
               <RusheeEmail>{rushee.email}</RusheeEmail>
-              <Button>View Details</Button>
+              <ButtonContainer>
+                <Button onClick={(e) => {
+                  e.stopPropagation(); // Prevent card click event
+                  setSelectedRushee(rushee);
+                }}>
+                  View Details
+                </Button>
+                {rushee.picture && (
+                  <Button onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click event
+                    window.open(rushee.picture, '_blank');
+                  }}>
+                    View Image
+                  </Button>
+                )}
+              </ButtonContainer>
             </RusheeInfo>
           </RusheeCard>
         ))}

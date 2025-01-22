@@ -372,6 +372,11 @@ const SearchInput = styled.input`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
 const DisplayRushees = () => {
   const [rushees, setRushees] = useState([]);
   const [events, setEvents] = useState([]);
@@ -618,7 +623,22 @@ const DisplayRushees = () => {
             <RusheeInfo>
               <RusheeName>{rushee.name}</RusheeName>
               <RusheeEmail>{rushee.email}</RusheeEmail>
-              <Button>View Details</Button>
+              <ButtonContainer>
+                <Button onClick={(e) => {
+                  e.stopPropagation(); // Prevent card click event
+                  setSelectedRushee(rushee);
+                }}>
+                  View Details
+                </Button>
+                {rushee.picture && (
+                  <Button onClick={(e) => {
+                    e.stopPropagation(); // Prevent card click event
+                    window.open(rushee.picture, '_blank');
+                  }}>
+                    View Image
+                  </Button>
+                )}
+              </ButtonContainer>
             </RusheeInfo>
           </RusheeCard>
         ))}
