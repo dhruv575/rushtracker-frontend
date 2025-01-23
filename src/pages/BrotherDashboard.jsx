@@ -5,6 +5,7 @@ import { getBrotherData } from '../utils/auth';
 import EventList from '../components/Events/EventList';
 import UpdateProfile from '../components/Dashboards/UpdateProfile';
 import DisplayRushees from '../components/Rushees/RusheesBrother';
+import NotesLog from '../components/Rushees/NotesLog';
 
 const DashboardContainer = styled.div`
   padding: 2rem;
@@ -98,6 +99,8 @@ const BrotherDashboard = () => {
         return <UpdateProfile />;
       case 'display':
         return <DisplayRushees />;
+      case 'notesLog':
+        return <NotesLog />;
       case 'events':
       default:
         return <EventList />;
@@ -129,6 +132,12 @@ const BrotherDashboard = () => {
           onClick={() => setActiveTab('display')}
         >
           View Rushees
+        </Tab>
+        <Tab
+          active={activeTab === 'notesLog'}
+          onClick={() => setActiveTab('notesLog')}
+        >
+          Notes Log
         </Tab>
       </TabContainer>
 

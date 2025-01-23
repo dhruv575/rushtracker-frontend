@@ -8,6 +8,7 @@ import DisplayBrotherhood from '../components/Dashboards/DisplalyBrotherhood';
 import CreateEvent from '../components/Events/CreateEvent';
 import EventList from '../components/Events/EventList.jsx';
 import DisplayRushees from '../components/Rushees/RusheesBrother.jsx';
+import NotesLog from '../components/Rushees/NotesLog.jsx';
 
 const DashboardContainer = styled.div`
   padding: 2rem;
@@ -107,6 +108,8 @@ const PresidentDashboard = () => {
         return <EventList />;
       case 'displayRushees':
         return <DisplayRushees />;
+      case 'notesLog':
+        return <NotesLog />;
       case 'display':
       default:
         return <DisplayBrotherhood />;
@@ -156,6 +159,12 @@ const PresidentDashboard = () => {
           onClick={() => setActiveTab('displayRushees')}
         >
           Rushees
+        </Tab>
+        <Tab 
+          active={activeTab === 'notesLog'} 
+          onClick={() => setActiveTab('notesLog')}
+        >
+          Notes Log
         </Tab>
       </TabContainer>
 

@@ -6,6 +6,7 @@ import CreateEvent from '../components/Events/CreateEvent';
 import EventList from '../components/Events/EventList';
 import UpdateProfile from '../components/Dashboards/UpdateProfile';
 import DisplayRushees from '../components/Rushees/DisplayRushees';
+import NotesLog from '../components/Rushees/NotesLog';
 
 const DashboardContainer = styled.div`
   padding: 2rem;
@@ -102,6 +103,8 @@ const RCDashboard = () => {
         return <UpdateProfile />;
       case 'displayRushees':
         return <DisplayRushees />;
+      case 'notesLog':
+        return <NotesLog />;
       case 'events':
       default:
         return <EventList />;
@@ -139,6 +142,12 @@ const RCDashboard = () => {
           onClick={() => setActiveTab('displayRushees')}
         >
           Display Rushees
+        </Tab>
+        <Tab 
+          active={activeTab === 'notesLog'} 
+          onClick={() => setActiveTab('notesLog')}
+        >
+          Notes Log
         </Tab>
       </TabContainer>
 

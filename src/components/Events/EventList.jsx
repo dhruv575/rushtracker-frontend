@@ -249,7 +249,7 @@ const EventList = () => {
               </div>
               <ButtonGroup>
                 <Button variant="primary" onClick={() => handleOpenForm(event)}>
-                  Fill Out Form
+                  Fill Out Attendance
                 </Button>
                 <Button onClick={() => window.open(getPublicUrl(event), '_blank')}>
                   Open Public Form
