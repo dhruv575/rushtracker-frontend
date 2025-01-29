@@ -145,8 +145,11 @@ export const updateRusheeStatus = async (rusheeId, status, fraternity) => {
   return response.data;
 };
 
-export const addRusheeNote = async (rusheeId, content, fraternity) => {
-  const response = await api.post(`/rushees/${rusheeId}/notes?fraternity=${fraternity}`, { content });
+export const addRusheeNote = async (rusheeId, content, fraternity, isAnonymous = false) => {
+  const response = await api.post(`/rushees/${rusheeId}/notes?fraternity=${fraternity}`, { 
+    content,
+    isAnonymous 
+  });
   return response.data;
 };
 

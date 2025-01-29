@@ -160,6 +160,29 @@ const formatTimestamp = (timestamp) => {
   return date.toLocaleString(); // Adjust options for desired format
 };
 
+const NoteInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const AnonymousToggle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const Checkbox = styled.input`
+  cursor: pointer;
+`;
+
+const CheckboxLabel = styled.label`
+  color: #4a5568;
+  cursor: pointer;
+`;
+
 const Rushee = ({ rusheeId }) => {
   const [rushee, setRushee] = useState(null);
   const [fraternity, setFraternity] = useState(null);
@@ -169,6 +192,7 @@ const Rushee = ({ rusheeId }) => {
   const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const brother = getBrotherData(); // Add this line
 
   const fetchTags = () => {
@@ -252,14 +276,15 @@ const Rushee = ({ rusheeId }) => {
     if (!newNote.trim()) return;
 
     try {
-      console.log("Adding note:", newNote);
-      await addRusheeNote(rushee._id, newNote, brother.frat);
+      console.log("Adding note:", newNote, "Anonymous:", isAnonymous);
+      await addRusheeNote(rushee._id, newNote, brother.frat, isAnonymous);
       console.log("Note added successfully.");
 
       const updatedRushee = await getRusheeById(rushee._id, brother.frat);
       console.log("Refetched Rushee after adding note:", updatedRushee.data);
       setRushee(updatedRushee.data);
       setNewNote('');
+      setIsAnonymous(false); // Reset anonymous toggle after adding note
     } catch (error) {
       console.error("Failed to add note:", error);
     }
@@ -459,14 +484,27 @@ const Rushee = ({ rusheeId }) => {
         ) : (
           <p>No notes available.</p>
         )}
-        <NoteInput
-          value={newNote}
-          onChange={(e) => setNewNote(e.target.value)}
-          placeholder="Add a note..."
-        />
-        <Button onClick={handleAddNote} disabled={loading}>
-          {loading ? "Adding..." : "Add Note"}
-        </Button>
+        <NoteInputContainer>
+          <AnonymousToggle>
+            <Checkbox
+              type="checkbox"
+              id="anonymous"
+              checked={isAnonymous}
+              onChange={(e) => setIsAnonymous(e.target.checked)}
+            />
+            <CheckboxLabel htmlFor="anonymous">
+              Post Anonymously
+            </CheckboxLabel>
+          </AnonymousToggle>
+          <NoteInput
+            value={newNote}
+            onChange={(e) => setNewNote(e.target.value)}
+            placeholder="Add a note..."
+          />
+          <Button onClick={handleAddNote} disabled={loading}>
+            {loading ? "Adding..." : "Add Note"}
+          </Button>
+        </NoteInputContainer>
       </Section>
       <Divider />
       <Section>
