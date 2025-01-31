@@ -6,6 +6,7 @@ import EventList from '../components/Events/EventList';
 import UpdateProfile from '../components/Dashboards/UpdateProfile';
 import DisplayRushees from '../components/Rushees/RusheesBrother';
 import NotesLog from '../components/Rushees/NotesLog';
+import DelibsMode from '../components/Rushees/DelibsMode';
 
 const DashboardContainer = styled.div`
   padding: 2rem;
@@ -101,9 +102,12 @@ const BrotherDashboard = () => {
         return <DisplayRushees />;
       case 'notesLog':
         return <NotesLog />;
+      case 'delibsMode':
+        return <DelibsMode />;
       case 'events':
       default:
         return <EventList />;
+
     }
   };
 
@@ -138,6 +142,12 @@ const BrotherDashboard = () => {
           onClick={() => setActiveTab('notesLog')}
         >
           Notes Log
+        </Tab>
+        <Tab
+          active={activeTab === 'delibsMode'}
+          onClick={() => setActiveTab('delibsMode')}
+        >
+          Slides View
         </Tab>
       </TabContainer>
 
