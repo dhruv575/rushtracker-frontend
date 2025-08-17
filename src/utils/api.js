@@ -2,7 +2,7 @@ import axios from 'axios';
 import { clearUserData } from './auth';
 
 const api = axios.create({
-  baseURL: 'https://rushtracker-backend-6ca803ef895b.herokuapp.com/api'
+  baseURL: 'https://rushtracker-backend.vercel.app/api'
 });
 
 // Add request interceptor to add auth token
