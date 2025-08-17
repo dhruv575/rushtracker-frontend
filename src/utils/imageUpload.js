@@ -36,9 +36,15 @@ export const uploadImage = async (imageFile) => {
  * @throws {Error} If file is invalid or upload fails
  */
 export const handleImageUpload = async (file) => {
-  // Validate file type
-  if (!file.type.startsWith('image/')) {
-    throw new Error('Please select an image file');
+  // Validate file type - accept standard images and HEIC
+  const isValidImageType = file.type.startsWith('image/') ||
+                          file.type === 'image/heic' ||
+                          file.type === 'image/heif' ||
+                          file.name.toLowerCase().endsWith('.heic') ||
+                          file.name.toLowerCase().endsWith('.heif');
+  
+  if (!isValidImageType) {
+    throw new Error('Please select an image file (JPEG, PNG, HEIC, etc.)');
   }
 
   // Validate file size (5MB limit)

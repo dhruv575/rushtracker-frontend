@@ -512,7 +512,7 @@ const RusheeOnboardingForm = () => {
                 <FileInput
                   type="file"
                   id="profile-picture"
-                  accept="image/*"
+                  accept="image/*,.heic,.heif"
                   onChange={handleImageChange}
                   disabled={uploadingImage}
                   required
