@@ -322,7 +322,7 @@ const RusheeEventForm = ({ event, fraternity, isPublic }) => {
     try {
       const email = formResponses[event.rusheeForm.questions.findIndex((q) =>
         q.question.toLowerCase().includes('email')
-      )].toLowerCase();
+      )].toLowerCase().trim();
 
       let rusheeId = null;
 

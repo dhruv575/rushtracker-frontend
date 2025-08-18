@@ -435,7 +435,7 @@ const RusheeOnboardingForm = () => {
                 <Input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                  onChange={(e) => setEmail(e.target.value.toLowerCase().trim())}
                   required
                 />
               </FormGroup>
