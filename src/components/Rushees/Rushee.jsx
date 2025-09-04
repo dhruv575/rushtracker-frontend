@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getRusheeById, updateRusheeStatus, addRusheeNote, updateRushee, addRusheeTag, removeRusheeTag, getFraternity } from '../../utils/api';
+import { getRusheeById, updateRusheeStatus, addRusheeNote, updateRushee, addRusheeTag, removeRusheeTag, getFraternity, upvoteNote, downvoteNote, removeVote } from '../../utils/api';
 import { getBrotherData } from '../../utils/auth';
 
 const Container = styled.div`
@@ -381,6 +381,58 @@ const NoteMeta = styled.small`
   }
 `;
 
+const VoteContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+`;
+
+const VoteButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  color: #4a5568;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 36px;
+
+  &:hover {
+    background: #f7fafc;
+    border-color: #cbd5e0;
+  }
+
+  &.active {
+    background: ${props => props.$voteType === 'upvote' ? '#e6fffa' : '#fed7d7'};
+    border-color: ${props => props.$voteType === 'upvote' ? '#38b2ac' : '#fc8181'};
+    color: ${props => props.$voteType === 'upvote' ? '#234e52' : '#742a2a'};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    min-height: 44px;
+  }
+`;
+
+const VoteCount = styled.span`
+  font-weight: 600;
+  margin-left: 0.25rem;
+`;
+
 const Rushee = ({ rusheeId }) => {
   const [rushee, setRushee] = useState(null);
   const [fraternity, setFraternity] = useState(null);
@@ -429,16 +481,16 @@ const Rushee = ({ rusheeId }) => {
   const fetchRusheeDetails = async () => {
     try {
       const response = await getRusheeById(rusheeId, brother.frat);
-      console.log('Rushee details fetched successfully:', response.data);
-      setRushee(response.data);
-      setStatus(response.data.status);
+      console.log('Rushee details fetched successfully:', response.data.data);
+      setRushee(response.data.data);
+      setStatus(response.data.data.status);
   
       // Set rushee tags
-      setTags(response.data.tags || []);
+      setTags(response.data.data.tags || []);
   
       // Fetch fraternity details only if `fraternity` exists
-      if (response.data.fraternity) {
-        const fratResponse = await getFraternity(response.data.fraternity);
+      if (response.data.data.fraternity) {
+        const fratResponse = await getFraternity(response.data.data.fraternity);
         console.log('Fraternity details fetched successfully:', fratResponse.data);
         setFraternityTags(fratResponse.data.tags || []);
       } else {
@@ -479,12 +531,31 @@ const Rushee = ({ rusheeId }) => {
       console.log("Note added successfully.");
 
       const updatedRushee = await getRusheeById(rushee._id, brother.frat);
-      console.log("Refetched Rushee after adding note:", updatedRushee.data);
-      setRushee(updatedRushee.data);
+      console.log("Refetched Rushee after adding note:", updatedRushee.data.data);
+      setRushee(updatedRushee.data.data);
       setNewNote('');
       setIsAnonymous(false); // Reset anonymous toggle after adding note
     } catch (error) {
       console.error("Failed to add note:", error);
+    }
+  };
+
+  const handleVote = async (noteIndex, voteType) => {
+    try {
+      let response;
+      if (voteType === 'upvote') {
+        response = await upvoteNote(rushee._id, noteIndex, brother.frat);
+      } else if (voteType === 'downvote') {
+        response = await downvoteNote(rushee._id, noteIndex, brother.frat);
+      } else if (voteType === 'remove') {
+        response = await removeVote(rushee._id, noteIndex, brother.frat);
+      }
+
+      if (response.data.success) {
+        setRushee(response.data.data);
+      }
+    } catch (error) {
+      console.error("Failed to vote on note:", error);
     }
   };
 
@@ -653,16 +724,38 @@ const Rushee = ({ rusheeId }) => {
       <Section>
         <Label>Notes</Label>
         {rushee.notes.length > 0 ? (
-          rushee.notes.map((note) => {
+          rushee.notes.map((note, index) => {
             console.log("Processing note:", note);
+            const currentUserVoted = brother._id;
+            const hasUpvoted = note.upvotes && note.upvotes.includes(currentUserVoted);
+            const hasDownvoted = note.downvotes && note.downvotes.includes(currentUserVoted);
+            const upvoteCount = note.upvotes ? note.upvotes.length : 0;
+            const downvoteCount = note.downvotes ? note.downvotes.length : 0;
+            
             return (
-              <NoteItem key={note._id}>
+              <NoteItem key={note._id || index}>
                 <NoteContent>{note.content}</NoteContent>
                 <NoteMeta>
                   By: {note.author?.name || "Unknown Author"} (
                   {note.author?.email || "No Email"}) on{" "}
                   {formatTimestamp(note.timestamp)}
                 </NoteMeta>
+                <VoteContainer>
+                  <VoteButton
+                    $voteType="upvote"
+                    className={hasUpvoted ? 'active' : ''}
+                    onClick={() => handleVote(index, hasUpvoted ? 'remove' : 'upvote')}
+                  >
+                    ▲ <VoteCount>{upvoteCount}</VoteCount>
+                  </VoteButton>
+                  <VoteButton
+                    $voteType="downvote"
+                    className={hasDownvoted ? 'active' : ''}
+                    onClick={() => handleVote(index, hasDownvoted ? 'remove' : 'downvote')}
+                  >
+                    ▼ <VoteCount>{downvoteCount}</VoteCount>
+                  </VoteButton>
+                </VoteContainer>
               </NoteItem>
             );
           })

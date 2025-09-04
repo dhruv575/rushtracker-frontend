@@ -404,8 +404,8 @@ const DisplayRushees = () => {
     try {
       const brother = getBrotherData();
       const response = await getAllRushees({ fraternity: brother.frat });
-      setRushees(response.data || []);
-      setFilteredRushees(response.data || []);
+      setRushees(response.data.data || []);
+      setFilteredRushees(response.data.data || []);
     } catch (error) {
       console.error('Failed to fetch rushees:', error);
     }

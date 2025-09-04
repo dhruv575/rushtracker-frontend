@@ -131,12 +131,12 @@ export const getAllRushees = async (filters = {}) => {
     throw new Error('Fraternity ID is required');
   }
   const response = await api.get(`/rushees?fraternity=${fraternity}`);
-  return response.data;
+  return response;
 };
 
 export const getRusheeById = async (rusheeId, fraternity) => {
   const response = await api.get(`/rushees/${rusheeId}?fraternity=${fraternity}`);
-  return response.data;
+  return response;
 };
 
 export const updateRusheeStatus = async (rusheeId, status, fraternity) => {
@@ -169,6 +169,22 @@ export const addRusheeTag = async (rusheeId, tag) => {
 export const removeRusheeTag = async (rusheeId, tag) => {
   const response = await api.delete(`/rushees/${rusheeId}/tags`, { data: { tag } });
   return response.data;
+};
+
+// Note voting APIs
+export const upvoteNote = async (rusheeId, noteIndex, fraternity) => {
+  const response = await api.post(`/rushees/${rusheeId}/notes/${noteIndex}/upvote?fraternity=${fraternity}`);
+  return response;
+};
+
+export const downvoteNote = async (rusheeId, noteIndex, fraternity) => {
+  const response = await api.post(`/rushees/${rusheeId}/notes/${noteIndex}/downvote?fraternity=${fraternity}`);
+  return response;
+};
+
+export const removeVote = async (rusheeId, noteIndex, fraternity) => {
+  const response = await api.delete(`/rushees/${rusheeId}/notes/${noteIndex}/vote?fraternity=${fraternity}`);
+  return response;
 };
 
 export const uploadImageFile = async (file) => {

@@ -42,7 +42,7 @@ const Modal = styled.div`
   z-index: 1000;
 
   @media (max-width: 768px) {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     max-height: 100vh;
     top: 0;
@@ -52,6 +52,11 @@ const Modal = styled.div`
     padding: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    /* Prevent zoom issues */
+    touch-action: pan-y;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 `;
 
@@ -64,6 +69,30 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
   -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    /* Add a subtle hint that tapping closes */
+    &::after {
+      content: "Tap outside to close";
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      z-index: 1002;
+      animation: fadeInOut 3s ease-in-out;
+    }
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+  }
 `;
 
 const CheckboxList = styled.div`
@@ -107,7 +136,7 @@ const CloseButton = styled.button`
   background: transparent;
   border: none;
   font-size: 1.5rem;
-  position: absolute;
+  position: fixed;
   top: 0.5rem;
   right: 0.5rem;
   padding: 0.5rem;
@@ -124,12 +153,16 @@ const CloseButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255, 255, 255, 0.9);
+    top: max(1rem, env(safe-area-inset-top, 1rem));
+    right: max(1rem, env(safe-area-inset-right, 1rem));
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     font-size: 1.25rem;
+    min-height: 48px;
+    min-width: 48px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 `;
 
@@ -410,12 +443,58 @@ const DisplayRushees = () => {
     applyFilters();
   }, [selectedEvents, selectedStatus, selectedTagForFilter, rushees, searchQuery]);
 
+  // Add touch gesture handling for mobile modal closing
+  useEffect(() => {
+    if (!selectedRushee) return;
+
+    let startY = 0;
+    let currentY = 0;
+    let isDragging = false;
+
+    const handleTouchStart = (e) => {
+      startY = e.touches[0].clientY;
+      isDragging = true;
+    };
+
+    const handleTouchMove = (e) => {
+      if (!isDragging) return;
+      currentY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const deltaY = currentY - startY;
+      // If user swipes down more than 100px, close the modal
+      if (deltaY > 100) {
+        setSelectedRushee(null);
+      }
+    };
+
+    // Add touch event listeners to the modal
+    const modal = document.querySelector('[data-modal="rushee-modal"]');
+    if (modal) {
+      modal.addEventListener('touchstart', handleTouchStart, { passive: true });
+      modal.addEventListener('touchmove', handleTouchMove, { passive: true });
+      modal.addEventListener('touchend', handleTouchEnd, { passive: true });
+    }
+
+    return () => {
+      if (modal) {
+        modal.removeEventListener('touchstart', handleTouchStart);
+        modal.removeEventListener('touchmove', handleTouchMove);
+        modal.removeEventListener('touchend', handleTouchEnd);
+      }
+    };
+  }, [selectedRushee]);
+
   const fetchRushees = async () => {
     try {
       const brother = getBrotherData();
       const response = await getAllRushees({ fraternity: brother.frat });
-      setRushees(response.data || []);
-      setFilteredRushees(response.data || []);
+      setRushees(response.data.data || []);
+      setFilteredRushees(response.data.data || []);
     } catch (error) {
       console.error('Failed to fetch rushees:', error);
     }
@@ -657,7 +736,7 @@ const DisplayRushees = () => {
       {selectedRushee && (
         <>
           <Overlay onClick={() => setSelectedRushee(null)} />
-          <Modal>
+          <Modal data-modal="rushee-modal">
             <CloseButton onClick={() => setSelectedRushee(null)}>&times;</CloseButton>
             <Rushee rusheeId={selectedRushee._id} />
           </Modal>

@@ -197,7 +197,7 @@ const DelibsMode = () => {
   const fetchRushees = async () => {
     try {
       const response = await getAllRushees({ fraternity: brother.frat });
-      setRushees(response.data || []);
+      setRushees(response.data.data || []);
     } catch (error) {
       console.error('Failed to fetch rushees:', error);
     }
@@ -237,7 +237,7 @@ const DelibsMode = () => {
       
       // Fetch updated rushee data
       const response = await getAllRushees({ fraternity: brother.frat });
-      setRushees(response.data || []);
+      setRushees(response.data.data || []);
       
       // Clear the note input for this specific rushee
       setNoteInputs(prev => ({
