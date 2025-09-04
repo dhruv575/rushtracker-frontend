@@ -348,6 +348,7 @@ const NotesLog = () => {
       }
     } catch (error) {
       console.error("Failed to vote on note:", error);
+      console.error("Error response:", error.response?.data);
     }
   };
 
