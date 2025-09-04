@@ -42,11 +42,16 @@ const Modal = styled.div`
   z-index: 1000;
 
   @media (max-width: 768px) {
-    width: 95%;
-    padding: 1rem;
-    max-height: 95vh;
-    top: 2.5vh;
-    transform: translateX(-50%);
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    top: 0;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+    padding: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 `;
 
@@ -112,14 +117,19 @@ const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1001;
   
   &:hover {
     color: red;
   }
 
   @media (max-width: 768px) {
-    top: 0.25rem;
-    right: 0.25rem;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 1.25rem;
   }
 `;
 

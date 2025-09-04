@@ -10,6 +10,14 @@ const Container = styled.div`
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin: 0;
+    border-radius: 0;
+    max-width: 100%;
+    min-height: 100vh;
+  }
 `;
 
 const Header = styled.div`
@@ -49,6 +57,12 @@ const StatusSelect = styled.select`
   border: 1px solid #e2e8f0;
   border-radius: 4px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 44px; /* Minimum touch target size */
+  }
 `;
 
 const NoteInput = styled.textarea`
@@ -63,6 +77,12 @@ const NoteInput = styled.textarea`
     outline: none;
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 120px;
   }
 `;
 
@@ -84,6 +104,12 @@ const Button = styled.button`
     background-color: #a0aec0;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    font-size: 16px;
+    min-height: 44px; /* Minimum touch target size */
+  }
 `;
 
 const Table = styled.table`
@@ -102,6 +128,44 @@ const Table = styled.table`
     background-color: #f7fafc;
     font-weight: bold;
   }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    
+    th,
+    td {
+      padding: 0.75rem 0.5rem;
+      word-break: break-word;
+    }
+  }
+`;
+
+const EventSubmissionTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+
+  th,
+  td {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem;
+    word-break: break-word;
+  }
+
+  th {
+    background-color: #f7fafc;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    
+    th,
+    td {
+      padding: 0.75rem 0.5rem;
+    }
+  }
 `;
 
 const ProfileField = styled.div`
@@ -119,12 +183,24 @@ const Input = styled.input`
     border-color: #3182ce;
     box-shadow: 0 0 0 1px #3182ce;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 44px; /* Minimum touch target size */
+  }
 `;
 
 const Select = styled.select`
   padding: 0.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 44px; /* Minimum touch target size */
+  }
 `;
 
 const ProfileHeader = styled.div`
@@ -132,6 +208,13 @@ const ProfileHeader = styled.div`
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
 `;
 
 const ProfileImage = styled.div`
@@ -140,6 +223,11 @@ const ProfileImage = styled.div`
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 const RusheeImage = styled.img`
@@ -150,6 +238,20 @@ const RusheeImage = styled.img`
 
 const ProfileInfo = styled.div`
   flex: 1;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    p {
+      font-size: 1rem;
+      color: #666;
+    }
+  }
 `;
 
 const formatTimestamp = (timestamp) => {
@@ -172,15 +274,111 @@ const AnonymousToggle = styled.div`
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
 `;
 
 const Checkbox = styled.input`
   cursor: pointer;
+  width: 18px;
+  height: 18px;
+
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const CheckboxLabel = styled.label`
   color: #4a5568;
   cursor: pointer;
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const Tag = styled.span`
+  background: #3182ce;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #2c5282;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    min-height: 44px; /* Minimum touch target size */
+  }
+`;
+
+const TagInputContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+`;
+
+const NoteItem = styled.div`
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  border-left: 4px solid #3182ce;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+  }
+`;
+
+const NoteContent = styled.p`
+  margin: 0 0 0.5rem 0;
+  line-height: 1.5;
+  word-break: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+`;
+
+const NoteMeta = styled.small`
+  color: #666;
+  font-size: 0.85rem;
+  word-break: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Rushee = ({ rusheeId }) => {
@@ -329,37 +527,24 @@ const Rushee = ({ rusheeId }) => {
       </Section>
       <Section>
         <Label>Tags</Label>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+        <TagsContainer>
           {tags.length > 0 ? (
             tags.map((tag, index) => (
-              <span
+              <Tag
                 key={index}
-                style={{
-                  background: '#3182ce',
-                  color: 'white',
-                  padding: '0.5rem 1rem',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                }}
                 onClick={() => handleRemoveTag(tag)}
               >
                 {tag} &times;
-              </span>
+              </Tag>
             ))
           ) : (
             <p>No tags available.</p>
           )}
-        </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        </TagsContainer>
+        <TagInputContainer>
           <Select
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
-            style={{
-              padding: '0.5rem',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-              flex: '1',
-            }}
           >
             <option value="">Select a tag</option>
             {fraternityTags.map((tag) => (
@@ -371,7 +556,7 @@ const Rushee = ({ rusheeId }) => {
           <Button onClick={handleAddTag} disabled={!newTag}>
             Add Tag
           </Button>
-        </div>
+        </TagInputContainer>
       </Section>
       <Divider />
       <Section>
@@ -471,14 +656,14 @@ const Rushee = ({ rusheeId }) => {
           rushee.notes.map((note) => {
             console.log("Processing note:", note);
             return (
-              <div key={note._id} style={{ marginBottom: "1rem" }}>
-                <p>{note.content}</p>
-                <small>
+              <NoteItem key={note._id}>
+                <NoteContent>{note.content}</NoteContent>
+                <NoteMeta>
                   By: {note.author?.name || "Unknown Author"} (
                   {note.author?.email || "No Email"}) on{" "}
                   {formatTimestamp(note.timestamp)}
-                </small>
-              </div>
+                </NoteMeta>
+              </NoteItem>
             );
           })
         ) : (
@@ -521,24 +706,24 @@ const Rushee = ({ rusheeId }) => {
                     return (
                         <div key={subIndex} style={{ marginBottom: '1rem' }}>
                         <p><strong>Submitted by:</strong> {submission.rushee?.name || 'Unknown'} ({submission.rushee?.email || 'No Email'})</p>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5rem' }}>
+                        <EventSubmissionTable>
                             <thead>
                             <tr>
-                                <th style={{ textAlign: 'left', borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Question</th>
-                                <th style={{ textAlign: 'left', borderBottom: '1px solid #ddd', padding: '0.5rem' }}>Answer</th>
+                                <th>Question</th>
+                                <th>Answer</th>
                             </tr>
                             </thead>
                             <tbody>
                             {event.rusheeForm.questions.map((question, qIndex) => (
                                 <tr key={qIndex}>
-                                <td style={{ padding: '0.5rem', borderBottom: '1px solid #ddd' }}>{question.question}</td>
-                                <td style={{ padding: '0.5rem', borderBottom: '1px solid #ddd' }}>
+                                <td>{question.question}</td>
+                                <td>
                                     {parsedResponses[qIndex] || 'No Response'}
                                 </td>
                                 </tr>
                             ))}
                             </tbody>
-                        </table>
+                        </EventSubmissionTable>
                         </div>
                     );
                     })
