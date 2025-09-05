@@ -233,7 +233,7 @@ const DelibsMode = () => {
 
     setLoading(true);
     try {
-      await addRusheeNote(rusheeId, noteContent, brother.frat, isAnonymous);
+      await addRusheeNote(rusheeId, noteContent, brother.frat, isAnonymous, brother.name);
       
       // Fetch updated rushee data
       const response = await getAllRushees({ fraternity: brother.frat });

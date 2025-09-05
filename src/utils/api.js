@@ -5,6 +5,10 @@ const api = axios.create({
   baseURL: 'https://rushtracker-backend.vercel.app/api'
 });
 
+// const api = axios.create({
+//     baseURL: 'http://localhost:5000/api'
+//   });
+
 // Add request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
@@ -140,15 +144,15 @@ export const getRusheeById = async (rusheeId, fraternity) => {
 };
 
 export const updateRusheeStatus = async (rusheeId, status, fraternity) => {
-  console.log("API Call - Rushee ID:", rusheeId, "Status:", status);
   const response = await api.patch(`/rushees/${rusheeId}/status?fraternity=${fraternity}`, { status });
   return response.data;
 };
 
-export const addRusheeNote = async (rusheeId, content, fraternity, isAnonymous = false) => {
+export const addRusheeNote = async (rusheeId, content, fraternity, isAnonymous = false, realBrotherName = null) => {
   const response = await api.post(`/rushees/${rusheeId}/notes?fraternity=${fraternity}`, { 
     content,
-    isAnonymous 
+    isAnonymous,
+    real_brother: isAnonymous ? realBrotherName : undefined
   });
   return response.data;
 };

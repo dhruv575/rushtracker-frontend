@@ -453,7 +453,6 @@ const Rushee = ({ rusheeId }) => {
     if (!newTag.trim()) return;
     try {
       const response = await addRusheeTag(rushee._id, newTag); // Use API to add the tag
-      console.log('Tag added:', response);
       setTags((prev) => [...prev, newTag]); // Update the local state
       setNewTag(''); // Clear the input field
     } catch (error) {
@@ -464,7 +463,6 @@ const Rushee = ({ rusheeId }) => {
   const handleRemoveTag = async (tag) => {
     try {
       const response = await removeRusheeTag(rushee._id, tag); // Use API to remove the tag
-      console.log('Tag removed:', response);
       setTags((prev) => prev.filter((t) => t !== tag)); // Update the local state
     } catch (error) {
       console.error('Failed to remove tag:', error);
@@ -473,7 +471,6 @@ const Rushee = ({ rusheeId }) => {
   
 
   useEffect(() => {
-    console.log("Fetching Rushee details for ID:", rusheeId);
     fetchRusheeDetails();
   }, [rusheeId]);
 
@@ -481,7 +478,6 @@ const Rushee = ({ rusheeId }) => {
   const fetchRusheeDetails = async () => {
     try {
       const response = await getRusheeById(rusheeId, brother.frat);
-      console.log('Rushee details fetched successfully:', response.data.data);
       setRushee(response.data.data);
       setStatus(response.data.data.status);
   
@@ -491,7 +487,6 @@ const Rushee = ({ rusheeId }) => {
       // Fetch fraternity details only if `fraternity` exists
       if (response.data.data.fraternity) {
         const fratResponse = await getFraternity(response.data.data.fraternity);
-        console.log('Fraternity details fetched successfully:', fratResponse.data);
         setFraternityTags(fratResponse.data.tags || []);
       } else {
         console.warn('Fraternity ID not available in rushee data');
@@ -507,11 +502,9 @@ const Rushee = ({ rusheeId }) => {
 
   const handleStatusChange = async (e) => {
     const selectedStatus = e.target.value;
-    console.log("Updating status to:", selectedStatus);
 
     try {
       await updateRusheeStatus(rushee._id, selectedStatus, brother.frat);
-      console.log("Status updated successfully.");
       setRushee((prev) => ({
         ...prev,
         status: selectedStatus,
@@ -526,12 +519,9 @@ const Rushee = ({ rusheeId }) => {
     if (!newNote.trim()) return;
 
     try {
-      console.log("Adding note:", newNote, "Anonymous:", isAnonymous);
-      await addRusheeNote(rushee._id, newNote, brother.frat, isAnonymous);
-      console.log("Note added successfully.");
+      await addRusheeNote(rushee._id, newNote, brother.frat, isAnonymous, brother.name);
 
       const updatedRushee = await getRusheeById(rushee._id, brother.frat);
-      console.log("Refetched Rushee after adding note:", updatedRushee.data.data);
       setRushee(updatedRushee.data.data);
       setNewNote('');
       setIsAnonymous(false); // Reset anonymous toggle after adding note
@@ -726,7 +716,6 @@ const Rushee = ({ rusheeId }) => {
         <Label>Notes</Label>
         {rushee.notes.length > 0 ? (
           rushee.notes.map((note, index) => {
-            console.log("Processing note:", note);
             const currentUserVoted = brother._id;
             const hasUpvoted = note.upvotes && note.upvotes.includes(currentUserVoted);
             const hasDownvoted = note.downvotes && note.downvotes.includes(currentUserVoted);

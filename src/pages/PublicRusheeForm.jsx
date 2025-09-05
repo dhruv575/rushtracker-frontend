@@ -94,13 +94,11 @@ const PublicRusheeForm = () => {
       }
 
       // Fetch fraternity using direct ID
-      console.log("Fetching fraternity info for ID:", fratId);
       const fratResponse = await api.get(`/frats/${fratId}`);
       const fratData = fratResponse.data.data;
       setFratInfo(fratData);
 
       // Fetch event using direct ID
-      console.log("Fetching event info for ID:", eventId);
       const eventResponse = await api.get(`/events/${eventId}?fraternity=${fratId}`);
       const eventData = eventResponse.data.data;
       
