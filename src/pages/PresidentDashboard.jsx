@@ -10,6 +10,7 @@ import EventList from '../components/Events/EventList.jsx';
 import DisplayRushees from '../components/Rushees/RusheesBrother.jsx';
 import NotesLog from '../components/Rushees/NotesLog.jsx';
 import DelibsMode from '../components/Rushees/DelibsMode.jsx';
+import ManageNotes from '../components/Rushees/ManageNotes.jsx';
 
 const DashboardContainer = styled.div`
   padding: 2rem;
@@ -114,6 +115,8 @@ const PresidentDashboard = () => {
         return <NotesLog />;
       case 'delibsMode':
         return <DelibsMode />;
+      case 'manageNotes':
+        return <ManageNotes />;
       case 'display':
       default:
         return <DisplayBrotherhood />;
@@ -176,6 +179,12 @@ const PresidentDashboard = () => {
           onClick={() => setActiveTab('delibsMode')}
         >
           Slides View
+        </Tab>
+        <Tab 
+          active={activeTab === 'manageNotes'} 
+          onClick={() => setActiveTab('manageNotes')}
+        >
+          Manage Notes
         </Tab>
       </TabContainer>
 

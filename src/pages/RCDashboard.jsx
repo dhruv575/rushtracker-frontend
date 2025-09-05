@@ -8,6 +8,7 @@ import UpdateProfile from '../components/Dashboards/UpdateProfile';
 import DisplayRushees from '../components/Rushees/DisplayRushees';
 import NotesLog from '../components/Rushees/NotesLog';
 import DelibsMode from '../components/Rushees/DelibsMode';
+import ManageNotes from '../components/Rushees/ManageNotes';
 const DashboardContainer = styled.div`
   padding: 2rem;
 
@@ -107,6 +108,8 @@ const RCDashboard = () => {
         return <NotesLog />;
       case 'delibsMode':
         return <DelibsMode />;
+      case 'manageNotes':
+        return <ManageNotes />;
       case 'events':
       default:
         return <EventList />;
@@ -157,6 +160,12 @@ const RCDashboard = () => {
           onClick={() => setActiveTab('delibsMode')}
         >
           Slides View
+        </Tab>
+        <Tab 
+          active={activeTab === 'manageNotes'} 
+          onClick={() => setActiveTab('manageNotes')}
+        >
+          Manage Notes
         </Tab>
       </TabContainer>
 

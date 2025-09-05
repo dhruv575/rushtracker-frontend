@@ -191,6 +191,11 @@ export const removeVote = async (rusheeId, noteIndex, fraternity) => {
   return response;
 };
 
+export const deleteNote = async (rusheeId, noteIndex, fraternity) => {
+  const response = await api.delete(`/rushees/${rusheeId}/notes/${noteIndex}?fraternity=${fraternity}`);
+  return response;
+};
+
 export const uploadImageFile = async (file) => {
   const formData = new FormData();
   formData.append('image', file);
