@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getAllEvents } from '../../utils/api';
-import { getBrotherData } from '../../utils/auth';
 
 const ExportContainer = styled.div`
   display: flex;
@@ -45,66 +43,32 @@ const ExportButton = styled.button`
 `;
 
 const CSVExport = ({ rushees, allRushees }) => {
-  const generateCSV = async (data) => {
+  const generateCSV = (data) => {
     try {
-      const brother = getBrotherData();
-      const eventsResponse = await getAllEvents({ fraternity: brother.frat });
-      const events = eventsResponse.data || [];
+      // Simple headers for just names and emails
+      const headers = ['Name', 'Email'];
 
-      const baseHeaders = [
-        'Name',
-        'Email',
-        'Phone',
-        'Major',
-        'Tags',
-        'Year',
-        'GPA',
-        'Picture',
-        'Resume'
-      ];
+      // Extract only name and email from each rushee
+      const csvData = data.map(rushee => [
+        rushee.name || '',
+        rushee.email || ''
+      ]);
 
-      const eventHeaders = events.map(event => `Event: ${event.name}`);
-      const headers = [...baseHeaders, ...eventHeaders, 'Notes'];
-
-      const csvData = data.map(rushee => {
-        const basicInfo = [
-          rushee.name || '',
-          rushee.email || '',
-          rushee.phone || '',
-          rushee.major || '',
-          (rushee.tags || []).join('; '),
-          rushee.year || '',
-          rushee.gpa || '',
-          rushee.picture || '',
-          rushee.resume || ''
-        ];
-
-        const eventData = events.map(event => {
-          const attended = rushee.eventsAttended.some(
-            attendedEvent => attendedEvent._id === event._id
-          );
-          return attended ? 'Attended' : 'Not Attended';
-        });
-
-        const notes = (rushee.notes || [])
-          .map(note => `${note.content}`)
-          .join('\\n'); // Use escaped newline for CSV
-
-        return [...basicInfo, ...eventData, notes];
-      });
-
+      // Create CSV content
       const csvContent = [
         headers.join(','),
         ...csvData.map(row => 
           row.map(cell => {
+            // Escape quotes and wrap in quotes if contains comma, newline, or quote
             const processedCell = String(cell).replace(/"/g, '""');
             return /[,\n"]/.test(processedCell) 
               ? `"${processedCell}"`
               : processedCell;
           }).join(',')
         )
-      ].join('\\n');
+      ].join('\n');
 
+      // Create and download the file
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
