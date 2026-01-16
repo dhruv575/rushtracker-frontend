@@ -414,7 +414,7 @@ const RusheeEventForm = ({ event, fraternity, isPublic }) => {
       });
       
       // If rushee exists and has complete info, go to step 3
-      if (existingRushee.name && existingRushee.phone && existingRushee.major && existingRushee.year) {
+      if (existingRushee.name && existingRushee.phone && existingRushee.major && existingRushee.year && existingRushee.picture) {
         setCurrentStep(3);
       } else {
         setCurrentStep(2);
@@ -435,7 +435,7 @@ const RusheeEventForm = ({ event, fraternity, isPublic }) => {
   };
 
   const validateRusheeInfo = () => {
-    return rusheeInfo.name && rusheeInfo.phone && rusheeInfo.major && rusheeInfo.year;
+    return rusheeInfo.name && rusheeInfo.phone && rusheeInfo.major && rusheeInfo.year && rusheeInfo.picture;
   };
 
   const handleRusheeInfoSubmit = async (e) => {
@@ -726,7 +726,7 @@ const RusheeEventForm = ({ event, fraternity, isPublic }) => {
       </FormGroup>
 
       <FormGroup>
-        <Label>Profile Picture</Label>
+        <Label>Profile Picture *</Label>
         <ImageUploadContainer>
           <ImagePreviewContainer hasImage={!!rusheeInfo.picture}>
             {rusheeInfo.picture ? (
