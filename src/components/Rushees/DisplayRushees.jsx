@@ -355,11 +355,6 @@ const RusheeEmail = styled.div`
   font-size: 14px;
 `;
 
-const RusheeStatus = styled.div`
-  color: #444;
-  font-size: 14px;
-`;
-
 const SearchRow = styled.div`
   display: flex;
   flex-direction: row;
