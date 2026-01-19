@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { handleImageUpload } from '../../utils/imageUpload';
 import api from '../../utils/api';
@@ -230,7 +230,6 @@ const LoadingSpinner = styled.div`
 
 const RusheeOnboardingForm = () => {
   const { fratId } = useParams();
-  const navigate = useNavigate();
   const [fratInfo, setFratInfo] = useState(null);
   const [email, setEmail] = useState('');
   const [emailSubmitted, setEmailSubmitted] = useState(false);

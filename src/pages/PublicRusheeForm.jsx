@@ -82,10 +82,6 @@ const PublicRusheeForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchEventAndFratInfo();
-  }, []);
-
   const fetchEventAndFratInfo = useCallback(async () => {
     try {
       if (!fratId || !eventId) {
@@ -113,7 +109,11 @@ const PublicRusheeForm = () => {
       console.error("Error fetching data:", error);
       setError(error.response?.data?.message || 'Failed to load event details');
     }
-  });
+  }, [fratId, eventId]);
+
+  useEffect(() => {
+    fetchEventAndFratInfo();
+  }, [fetchEventAndFratInfo]);
 
   if (error) {
     return (

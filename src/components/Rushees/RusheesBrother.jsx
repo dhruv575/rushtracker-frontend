@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { 
   getAllRushees, 
@@ -398,7 +398,7 @@ const DisplayRushees = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [selectedEvents, selectedStatus, selectedTagForFilter, rushees, searchQuery]);
+  }, [applyFilters]);
 
   const fetchRushees = async () => {
     try {
@@ -482,7 +482,7 @@ const DisplayRushees = () => {
     setSelectedStatus(e.target.value);
   };
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     let filtered = rushees;
 
     // Apply search filter
@@ -513,7 +513,7 @@ const DisplayRushees = () => {
     }
 
     setFilteredRushees(filtered);
-  };
+  }, [rushees, searchQuery, selectedEvents, selectedStatus, selectedTagForFilter]);
 
   return (
     <Container>
