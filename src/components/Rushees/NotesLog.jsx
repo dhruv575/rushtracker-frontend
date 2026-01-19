@@ -411,7 +411,7 @@ const NotesLog = () => {
             <NoteContent>
               <NoteText>{note.content}</NoteText>
               <NoteMetadata>
-                By: {note.author.name} ({note.author.email}) on {formatTimestamp(note.timestamp)}
+                By: {note.author ? `${note.author.name} (${note.author.email})` : 'Anonymous'} on {formatTimestamp(note.timestamp)}
               </NoteMetadata>
               <VoteContainer>
                 <VoteButton
