@@ -228,6 +228,7 @@ const BrotherEventForm = ({ eventId }) => {
       return;
     }
     fetchEventDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, navigate, brother]);
 
   const fetchEventDetails = useCallback(async () => {

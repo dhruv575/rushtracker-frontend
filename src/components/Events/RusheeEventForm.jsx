@@ -452,8 +452,6 @@ const RusheeEventForm = ({ event, fraternity, isPublic }) => {
     setMessage({ type: '', content: '' });
 
     try {
-      let rusheeId;
-
       if (rusheeData) {
         // Update existing rushee
         const updateData = {
@@ -465,7 +463,6 @@ const RusheeEventForm = ({ event, fraternity, isPublic }) => {
           resume: rusheeInfo.resume,
         };
         await api.patch(`/rushees/${rusheeData._id}?fraternity=${fraternity._id}`, updateData);
-        rusheeId = rusheeData._id;
       } else {
         // Create new rushee
         const createResponse = await api.post('/rushees', {
@@ -473,7 +470,6 @@ const RusheeEventForm = ({ event, fraternity, isPublic }) => {
           email,
           fraternity: fraternity._id
         });
-        rusheeId = createResponse.data.data._id;
         setRusheeData(createResponse.data.data);
       }
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../utils/api';
-import { getBrotherData } from '../../utils/auth';
 
 const ExportButton = styled.button`
   background-color: #3182ce;
@@ -32,7 +31,6 @@ const ExportButton = styled.button`
 
 const BrotherExport = ({ brothers }) => {
   const [events, setEvents] = useState([]);
-  const brother = getBrotherData();
 
   useEffect(() => {
     fetchEvents();

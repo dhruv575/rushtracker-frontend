@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import api, { getEventSubmissions, getRusheeById } from '../../utils/api';
+import api from '../../utils/api';
 import Rushee from '../Rushees/Rushee'; // Import the Rushee component
 
 const PageContainer = styled.div`

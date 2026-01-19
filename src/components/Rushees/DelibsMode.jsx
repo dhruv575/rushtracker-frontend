@@ -192,6 +192,7 @@ const DelibsMode = () => {
   
   useEffect(() => {
     fetchRushees();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchRushees = async () => {

@@ -225,35 +225,6 @@ const Title = styled.h1`
   }
 `;
 
-const Button = styled.button`
-  background: #4299e1;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: #3182ce;
-  }
-
-  &:disabled {
-    background: #a0aec0;
-    cursor: not-allowed;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-    padding: 0.8rem 1.6rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    min-height: 44px;
-  }
-`;
-
 const ManageNotes = () => {
   const [notes, setNotes] = useState([]);
   const [filteredNotes, setFilteredNotes] = useState([]);
@@ -264,6 +235,7 @@ const ManageNotes = () => {
 
   useEffect(() => {
     fetchNotesFromAllRushees();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

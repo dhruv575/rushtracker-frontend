@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import api, { getEventSubmissions } from '../../utils/api';
+import api from '../../utils/api';
 
 const PageContainer = styled.div`
   min-height: 30vh;

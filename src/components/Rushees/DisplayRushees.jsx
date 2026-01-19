@@ -436,6 +436,7 @@ const DisplayRushees = () => {
 
   useEffect(() => {
     applyFilters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEvents, selectedStatus, selectedTagForFilter, rushees, searchQuery]);
 
   // Add touch gesture handling for mobile modal closing

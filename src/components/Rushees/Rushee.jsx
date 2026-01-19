@@ -20,24 +20,10 @@ const Container = styled.div`
   }
 `;
 
-const Header = styled.div`
-  text-align: center;
-  margin-bottom: 2rem;
-`;
-
 const Divider = styled.hr`
   margin: 1rem 0rem;
   border: none;
   border-top: 2px solid #000000;
-`;
-
-const Title = styled.h1`
-  color: #2d3748;
-  margin-bottom: 0.5rem;
-`;
-
-const Subtitle = styled.p`
-  color: #4a5568;
 `;
 
 const Section = styled.div`
@@ -109,34 +95,6 @@ const Button = styled.button`
     padding: 1rem;
     font-size: 16px;
     min-height: 44px; /* Minimum touch target size */
-  }
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-
-  th,
-  td {
-    border: 1px solid #e2e8f0;
-    padding: 0.5rem;
-    text-align: left;
-  }
-
-  th {
-    background-color: #f7fafc;
-    font-weight: bold;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-    
-    th,
-    td {
-      padding: 0.75rem 0.5rem;
-      word-break: break-word;
-    }
   }
 `;
 
