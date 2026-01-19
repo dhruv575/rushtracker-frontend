@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { 
-  getAllRushees, 
-  getAllEvents, 
-  getFraternity, 
-  addFraternityTag, 
-  removeFraternityTag, 
-  addRusheeTag 
+import {
+  getAllRushees,
+  getAllEvents,
+  getFraternity
 } from '../../utils/api';
 import { getBrotherData } from '../../utils/auth';
 import Rushee from './Rushee';
@@ -146,64 +143,6 @@ const FilterSection = styled.div`
   }
 `;
 
-const TagsContainer = styled.div`
-  grid-column: 1 / -1;
-  margin-bottom: 1rem;
-  padding: 1.25rem;
-  background: #edf2f7;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
-`;
-
-const Tag = styled.span`
-  display: inline-flex;
-  align-items: center;
-  margin: 0.25rem;
-  padding: 0.5rem 0.75rem;
-  background: #3182ce;
-  color: white;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  min-height: 36px;
-
-  &:hover {
-    background: #2c5282;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    margin: 0.25rem;
-  }
-`;
-
-const AddTagInput = styled.input`
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
-  margin-right: 0.5rem;
-  width: 100%;
-  max-width: 300px;
-  height: 44px;
-
-  &:focus {
-    outline: none;
-    border-color: #3182ce;
-    box-shadow: 0 0 0 1px #3182ce;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    margin-right: 0;
-    margin-bottom: 0.5rem;
-  }
-`;
-
 const Select = styled.select`
   padding: 0.75rem;
   border: 1px solid #e2e8f0;
@@ -317,11 +256,6 @@ const RusheeEmail = styled.div`
   font-size: 14px;
 `;
 
-const RusheeStatus = styled.div`
-  color: #444;
-  font-size: 14px;
-`;
-
 const SearchRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -382,13 +316,40 @@ const DisplayRushees = () => {
   const [events, setEvents] = useState([]);
   const [filteredRushees, setFilteredRushees] = useState([]);
   const [tags, setTags] = useState([]);
-  const [newTag, setNewTag] = useState('');
   const [selectedTagForFilter, setSelectedTagForFilter] = useState('');
-  const [selectedTagForBulkAdd, setSelectedTagForBulkAdd] = useState('');
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedRushee, setSelectedRushee] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const applyFilters = useCallback(() => {
+    let filtered = rushees;
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter((rushee) =>
+        rushee.name.toLowerCase().includes(query)
+      );
+    }
+
+    if (selectedEvents.length > 0) {
+      filtered = filtered.filter((rushee) =>
+        selectedEvents.every((eventId) =>
+          rushee.eventsAttended.some((event) => event._id === eventId)
+        )
+      );
+    }
+
+    if (selectedStatus) {
+      filtered = filtered.filter((rushee) => rushee.status === selectedStatus);
+    }
+
+    if (selectedTagForFilter) {
+      filtered = filtered.filter((rushee) => rushee.tags.includes(selectedTagForFilter));
+    }
+
+    setFilteredRushees(filtered);
+  }, [rushees, searchQuery, selectedEvents, selectedStatus, selectedTagForFilter]);
 
   useEffect(() => {
     fetchRushees();
@@ -431,47 +392,6 @@ const DisplayRushees = () => {
     }
   };
 
-  const handleAddTag = async () => {
-    if (!newTag.trim()) return;
-    try {
-      const brother = getBrotherData();
-      await addFraternityTag(brother.frat, newTag);
-      setTags((prev) => [...prev, newTag]);
-      setNewTag('');
-    } catch (error) {
-      console.error('Failed to add tag:', error);
-    }
-  };
-
-  const handleRemoveTag = async (tag) => {
-    try {
-      const brother = getBrotherData();
-      await removeFraternityTag(brother.frat, tag);
-      setTags((prev) => prev.filter((t) => t !== tag));
-    } catch (error) {
-      console.error('Failed to remove tag:', error);
-    }
-  };
-
-  const handleAddTagToFilteredRushees = async () => {
-    if (!selectedTagForBulkAdd) return;
-    try {
-      for (const rushee of filteredRushees) {
-        await addRusheeTag(rushee._id, selectedTagForBulkAdd);
-      }
-      setFilteredRushees((prev) =>
-        prev.map((rushee) => ({
-          ...rushee,
-          tags: rushee.tags.includes(selectedTagForBulkAdd)
-            ? rushee.tags
-            : [...rushee.tags, selectedTagForBulkAdd],
-        }))
-      );
-    } catch (error) {
-      console.error('Failed to add tag to filtered rushees:', error);
-    }
-  };
-
   const handleEventFilterChange = (eventId) => {
     setSelectedEvents((prev) =>
       prev.includes(eventId) ? prev.filter((id) => id !== eventId) : [...prev, eventId]
@@ -481,39 +401,6 @@ const DisplayRushees = () => {
   const handleStatusFilterChange = (e) => {
     setSelectedStatus(e.target.value);
   };
-
-  const applyFilters = useCallback(() => {
-    let filtered = rushees;
-
-    // Apply search filter
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter((rushee) =>
-        rushee.name.toLowerCase().includes(query)
-      );
-    }
-
-    // Apply event filter
-    if (selectedEvents.length > 0) {
-      filtered = filtered.filter((rushee) =>
-        selectedEvents.every((eventId) =>
-          rushee.eventsAttended.some((event) => event._id === eventId)
-        )
-      );
-    }
-
-    // Apply status filter
-    if (selectedStatus) {
-      filtered = filtered.filter((rushee) => rushee.status === selectedStatus);
-    }
-
-    // Apply tag filter
-    if (selectedTagForFilter) {
-      filtered = filtered.filter((rushee) => rushee.tags.includes(selectedTagForFilter));
-    }
-
-    setFilteredRushees(filtered);
-  }, [rushees, searchQuery, selectedEvents, selectedStatus, selectedTagForFilter]);
 
   return (
     <Container>

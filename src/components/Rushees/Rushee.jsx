@@ -435,56 +435,42 @@ const VoteCount = styled.span`
 
 const Rushee = ({ rusheeId }) => {
   const [rushee, setRushee] = useState(null);
-  const [fraternity, setFraternity] = useState(null);
   const [fraternityTags, setFraternityTags] = useState([]);
   const [status, setStatus] = useState('');
   const [newNote, setNewNote] = useState('');
-  const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const brother = getBrotherData(); // Add this line
+  const brother = getBrotherData();
 
-  const fetchTags = () => {
-    setTags(rushee.tags || []); // Use rushee's tags if available
-  };
-  
   const handleAddTag = async () => {
     if (!newTag.trim()) return;
     try {
-      const response = await addRusheeTag(rushee._id, newTag); // Use API to add the tag
-      setTags((prev) => [...prev, newTag]); // Update the local state
-      setNewTag(''); // Clear the input field
+      await addRusheeTag(rushee._id, newTag);
+      setTags((prev) => [...prev, newTag]);
+      setNewTag('');
     } catch (error) {
       console.error('Failed to add tag:', error);
     }
   };
-  
+
   const handleRemoveTag = async (tag) => {
     try {
-      const response = await removeRusheeTag(rushee._id, tag); // Use API to remove the tag
-      setTags((prev) => prev.filter((t) => t !== tag)); // Update the local state
+      await removeRusheeTag(rushee._id, tag);
+      setTags((prev) => prev.filter((t) => t !== tag));
     } catch (error) {
       console.error('Failed to remove tag:', error);
     }
   };
-  
-
-  useEffect(() => {
-    fetchRusheeDetails();
-  }, [rusheeId]);
-
 
   const fetchRusheeDetails = async () => {
     try {
       const response = await getRusheeById(rusheeId, brother.frat);
       setRushee(response.data.data);
       setStatus(response.data.data.status);
-  
-      // Set rushee tags
+
       setTags(response.data.data.tags || []);
-  
-      // Fetch fraternity details only if `fraternity` exists
+
       if (response.data.data.fraternity) {
         const fratResponse = await getFraternity(response.data.data.fraternity);
         setFraternityTags(fratResponse.data.tags || []);
@@ -496,9 +482,13 @@ const Rushee = ({ rusheeId }) => {
       console.error('Failed to fetch rushee details:', error);
     }
   };
-  
-  
-  
+
+  useEffect(() => {
+    fetchRusheeDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rusheeId]);
+
+
 
   const handleStatusChange = async (e) => {
     const selectedStatus = e.target.value;
@@ -769,8 +759,8 @@ const Rushee = ({ rusheeId }) => {
             onChange={(e) => setNewNote(e.target.value)}
             placeholder="Add a note..."
           />
-          <Button onClick={handleAddNote} disabled={loading}>
-            {loading ? "Adding..." : "Add Note"}
+          <Button onClick={handleAddNote}>
+            Add Note
           </Button>
         </NoteInputContainer>
       </Section>
