@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import {
   getAllRushees,
   getAllEvents,
-  getFraternity
+  getFraternity,
+  deleteRushee as deleteRusheeApi
 } from '../../utils/api';
 import { getBrotherData } from '../../utils/auth';
 import Rushee from './Rushee';
@@ -193,6 +194,56 @@ const Button = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+`;
+
+const BatchDeleteButton = styled.button`
+  padding: 0.75rem 1rem;
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 44px;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+
+  &:hover:not(:disabled) {
+    background-color: #c53030;
+  }
+
+  &:active:not(:disabled) {
+    background-color: #9b2c2c;
+  }
+
+  &:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0.5rem;
+  }
+`;
+
+const SelectionLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #4a5568;
+  user-select: none;
+
+  input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
 `;
 
 const RusheeList = styled.div`
@@ -312,6 +363,8 @@ const SearchInput = styled.input`
 `;
 
 const DisplayRushees = () => {
+  const brother = getBrotherData();
+  const isPresident = brother?.position === 'President';
   const [rushees, setRushees] = useState([]);
   const [events, setEvents] = useState([]);
   const [filteredRushees, setFilteredRushees] = useState([]);
@@ -321,6 +374,8 @@ const DisplayRushees = () => {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedRushee, setSelectedRushee] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortAlphabetically, setSortAlphabetically] = useState(false);
+  const [selectedRusheeIds, setSelectedRusheeIds] = useState([]);
 
   const applyFilters = useCallback(() => {
     let filtered = rushees;
@@ -348,8 +403,14 @@ const DisplayRushees = () => {
       filtered = filtered.filter((rushee) => rushee.tags.includes(selectedTagForFilter));
     }
 
+    if (sortAlphabetically) {
+      filtered = [...filtered].sort((a, b) =>
+        (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
+      );
+    }
+
     setFilteredRushees(filtered);
-  }, [rushees, searchQuery, selectedEvents, selectedStatus, selectedTagForFilter]);
+  }, [rushees, searchQuery, selectedEvents, selectedStatus, selectedTagForFilter, sortAlphabetically]);
 
   useEffect(() => {
     fetchRushees();
@@ -400,6 +461,32 @@ const DisplayRushees = () => {
 
   const handleStatusFilterChange = (e) => {
     setSelectedStatus(e.target.value);
+  };
+
+  const handleToggleSelect = (e, rushee) => {
+    e.stopPropagation();
+    setSelectedRusheeIds((prev) =>
+      prev.includes(rushee._id)
+        ? prev.filter((id) => id !== rushee._id)
+        : [...prev, rushee._id]
+    );
+  };
+
+  const handleBatchDelete = async () => {
+    if (selectedRusheeIds.length === 0) return;
+    try {
+      for (const id of selectedRusheeIds) {
+        await deleteRusheeApi(id, brother.frat);
+      }
+      if (selectedRushee && selectedRusheeIds.includes(selectedRushee._id)) {
+        setSelectedRushee(null);
+      }
+      setSelectedRusheeIds([]);
+      fetchRushees();
+    } catch (err) {
+      console.error('Failed to delete rushees:', err);
+      alert(err.response?.data?.error || 'Failed to delete rushees.');
+    }
   };
 
   return (
@@ -454,6 +541,27 @@ const DisplayRushees = () => {
             ))}
           </Select>
         </FilterSection>
+        <FilterSection>
+          <CheckboxList>
+            <label>
+              <input
+                type="checkbox"
+                checked={sortAlphabetically}
+                onChange={(e) => setSortAlphabetically(e.target.checked)}
+              />
+              Sort by alphabetical order
+            </label>
+          </CheckboxList>
+          {isPresident && (
+            <BatchDeleteButton
+              type="button"
+              onClick={handleBatchDelete}
+              disabled={selectedRusheeIds.length === 0}
+            >
+              Batch delete {selectedRusheeIds.length > 0 ? `(${selectedRusheeIds.length})` : ''}
+            </BatchDeleteButton>
+          )}
+        </FilterSection>
       </FiltersContainer>
 
       <RusheeList>
@@ -481,18 +589,28 @@ const DisplayRushees = () => {
               <RusheeEmail>{rushee.email}</RusheeEmail>
               <ButtonContainer>
                 <Button onClick={(e) => {
-                  e.stopPropagation(); // Prevent card click event
+                  e.stopPropagation();
                   setSelectedRushee(rushee);
                 }}>
                   View Details
                 </Button>
                 {rushee.picture && (
                   <Button onClick={(e) => {
-                    e.stopPropagation(); // Prevent card click event
+                    e.stopPropagation();
                     window.open(rushee.picture, '_blank');
                   }}>
                     View Image
                   </Button>
+                )}
+                {isPresident && (
+                  <SelectionLabel onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="checkbox"
+                      checked={selectedRusheeIds.includes(rushee._id)}
+                      onChange={(e) => handleToggleSelect(e, rushee)}
+                    />
+                    Select
+                  </SelectionLabel>
                 )}
               </ButtonContainer>
             </RusheeInfo>

@@ -175,6 +175,11 @@ export const removeRusheeTag = async (rusheeId, tag) => {
   return response.data;
 };
 
+export const deleteRushee = async (rusheeId, fraternity) => {
+  const response = await api.delete(`/rushees/${rusheeId}?fraternity=${fraternity}`);
+  return response.data;
+};
+
 // Note voting APIs
 export const upvoteNote = async (rusheeId, noteIndex, fraternity) => {
   const response = await api.post(`/rushees/${rusheeId}/notes/${noteIndex}/upvote?fraternity=${fraternity}`);

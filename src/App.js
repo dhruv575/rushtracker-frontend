@@ -9,6 +9,7 @@ import RusheeSubmissions from './components/Events/RusheeSubmissions';
 import BrotherSubmissions from './components/Events/BrotherSubmissions';
 import RusheeOnboardingForm from './components/Rushees/RusheeOnboardingForm';
 import ManageNotes from './components/Rushees/ManageNotes';
+import Wrapped from './pages/Wrapped';
 import { getBrotherData } from './utils/auth';
 
 const PrivateRoute = ({ children }) => {
@@ -83,6 +84,14 @@ function App() {
             <AdminRoute>
               <ManageNotes />
             </AdminRoute>
+          }
+        />
+        <Route
+          path="/wrapped"
+          element={
+            <PrivateRoute>
+              <Wrapped />
+            </PrivateRoute>
           }
         />
         <Route path="/" element={<Navigate to="/dashboard" />} />
