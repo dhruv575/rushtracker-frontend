@@ -55,15 +55,6 @@ const Badge = styled.span`
   margin-bottom: 1.5rem;
 `;
 
-const BigNumber = styled.div`
-  font-size: clamp(4rem, 15vw, 8rem);
-  font-weight: 800;
-  color: white;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 60px rgba(29, 185, 84, 0.3);
-`;
-
 const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
